@@ -53,7 +53,7 @@ for(i = 0; i < 5; i++){
     }
 }
 printf("O maior salario eh %d do funcionario %d \n", ma, ima+1);
-printf("O menor salario eh %d do funcionario %d ", me, ime+1);
+printf("O menor salario eh %d do funcionario %d \n\n", me, ime+1);
 }
 
 int main(){
@@ -63,7 +63,8 @@ Funcionario x1;
 preencher(&x1);
 imprimir(&x1);
 reducao(&x1);
-
+printf("\n");
+fflush(stdin);
 printf("Segunda parte\n\n");
 
 for(i = 0; i < 5; i++){
@@ -73,8 +74,10 @@ for(i = 0; i < 5; i++){
  scanf("%d", &v3[i].salario);
  printf("Digite o identificador do funcionario %d: ", i+1);
  scanf("%d", &v3[i].ident);
+ fflush(stdin);
  printf("Digite o cargo do funcionario %d: ", i+1);
  scanf("%[^\n]", &v3[i].cargo);
+ fflush(stdin);
  printf("\n\n");
 
 
