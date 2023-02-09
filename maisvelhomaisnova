@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct pessoa{
+char nome[50];
+int documento;
+int idade;
+} Pessoa;
+
+void maisvelhamaisnova(int qtd, Pessoa *v4){
+int v, n, i; 
+
+for(i = 0; i < qtd; i++){
+	if(i == 0){
+		v = i;
+		n = i;
+	} else {
+		if(v4[v].idade < v4[i].idade){
+			v = i; 
+		}
+		if(v4[n].idade > v4[i].idade){
+			n = i; 
+		}
+	}
+}
+printf("O nome da pessoa mais velha eh: %s\n", v4[v].nome);
+printf("O nome da pessoa mais nova eh: %s", v4[n].nome);
+}
+
+int main(){
+int qtd, i; 
+printf("Digite o numero de pessoas que voce deseja cadastrar: ");
+scanf("%d", &qtd);
+Pessoa *v4 = (Pessoa*) malloc(qtd*sizeof(Pessoa));
+
+if(v4 == NULL){
+	exit(1);
+}
+fflush(stdin);
+for(i = 0; i < qtd; i++){
+printf("Digite o nome da %d pessoa:", i+1);
+scanf("%[^\n]", &v4[i].nome);
+fflush(stdin);
+printf("Digite o nuemro do documento da %d pessoa:", i+1);
+scanf("%d", &v4[i].documento);
+printf("Digite a idade da %d pessoa:", i+1);
+scanf("%d", &v4[i].idade);
+fflush(stdin);
+printf("\n\n");
+}
+maisvelhamaisnova(qtd, v4);
+free(v4);
+return 0;
+}
