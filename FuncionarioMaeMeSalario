@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct Funcionario{
+ char nome[50];
+ int salario;
+ int ident;
+ char cargo[20];
+} Funcionario;
+
+void preencher(Funcionario *p){
+    printf("Digite o nome do funcionario: ");
+    scanf("%[^\n]", &p->nome);
+    printf("Digite o salario do funcionario: ");
+    scanf("%d", &p->salario);
+    printf("Digite o identificador do funcionario: ");
+    scanf("%d", &p->ident);
+    fflush(stdin);
+    printf("Digite o cargo do funcionario: ");
+    scanf("%[^\n]", &p->cargo);
+}
+
+void imprimir(Funcionario *p){
+printf("O nome do funcionario eh: %s\n", p -> nome);
+printf("O salario do funcionario eh: %d\n", p -> salario);
+printf("O identificador do funcionario eh: %d\n", p -> ident);
+printf("O cargo do funcionario eh: %s\n", p -> cargo);
+}
+void reducao(Funcionario *p){
+p->salario = p->salario*0,9;
+printf("Houve uma reducao de 10 porcento no seu salario.\n ");
+}
+
+void maioremenor(Funcionario *v3){
+int ma;
+int me;
+int i, ima, ime;
+for(i = 0; i < 5; i++){
+    if(i == 0){
+    ma = v3[i].salario;
+    me = v3[i].salario;
+    ima = i;
+    ime = i;
+    } else {
+        if(v3[i].salario < me){
+            me = v3[i].salario;
+            ime = i;
+        }
+        if(v3[i].salario > ma){
+            ma = v3[i].salario;
+            ima = i;
+        }
+
+    }
+}
+printf("O maior salario eh %d do funcionario %d \n", ma, ima+1);
+printf("O menor salario eh %d do funcionario %d ", me, ime+1);
+}
+
+int main(){
+int i;
+Funcionario v3[5];
+Funcionario x1;
+preencher(&x1);
+imprimir(&x1);
+reducao(&x1);
+
+printf("Segunda parte\n\n");
+
+for(i = 0; i < 5; i++){
+ printf("Digite o nome do funcionario %d: ", i+1);
+ scanf("%[^\n]", &v3[i].nome);
+ printf("Digite o salario do funcionario %d: ", i+1);
+ scanf("%d", &v3[i].salario);
+ printf("Digite o identificador do funcionario %d: ", i+1);
+ scanf("%d", &v3[i].ident);
+ printf("Digite o cargo do funcionario %d: ", i+1);
+ scanf("%[^\n]", &v3[i].cargo);
+ printf("\n\n");
+
+
+}
+
+maioremenor(v3);
+
+return 0;
+}
