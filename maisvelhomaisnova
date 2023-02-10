@@ -6,8 +6,30 @@ int documento;
 int idade;
 } Pessoa;
 
+void preencher(Pessoa *x1){
+    printf("Digite o nome da pessoa: ");
+    scanf("%[^\n]", &x1->nome);
+    printf("Digite o numero do documento da pessoa: ");
+    scanf("%d", &x1->documento);
+    printf("Digite a idade da pessoa:");
+    scanf("%d", &x1->idade);
+}
+
+void imprimir(Pessoa *x1){
+    printf("O nome da pessoa: %s\n", x1->nome);
+    printf("A idade da pessoa: %d\n", x1->idade);
+    printf("O numero do documento da pessoa: %d\n", x1->documento);
+}
+
+void modifica(Pessoa *x1){
+x1->idade = x1->idade - 5;
+printf("Vc ficou 5 anos mais novo!");
+}
+
+
+
 void maisvelhamaisnova(int qtd, Pessoa *v4){
-int v, n, i; 
+int v, n, i;
 
 for(i = 0; i < qtd; i++){
 	if(i == 0){
@@ -15,10 +37,10 @@ for(i = 0; i < qtd; i++){
 		n = i;
 	} else {
 		if(v4[v].idade < v4[i].idade){
-			v = i; 
+			v = i;
 		}
 		if(v4[n].idade > v4[i].idade){
-			n = i; 
+			n = i;
 		}
 	}
 }
@@ -27,7 +49,7 @@ printf("O nome da pessoa mais nova eh: %s", v4[n].nome);
 }
 
 int main(){
-int qtd, i; 
+int qtd, i;
 printf("Digite o numero de pessoas que voce deseja cadastrar: ");
 scanf("%d", &qtd);
 Pessoa *v4 = (Pessoa*) malloc(qtd*sizeof(Pessoa));
@@ -49,5 +71,12 @@ printf("\n\n");
 }
 maisvelhamaisnova(qtd, v4);
 free(v4);
+
+printf("\n\nSegunda parte\n\n");
+
+Pessoa x1;
+preencher(&x1);
+imprimir(&x1);
+modifica(&x1);
 return 0;
 }
