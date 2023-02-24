@@ -26,59 +26,16 @@ scanf("%s[^\n]", mapa[j]);
 qtd = 0;
 for(j = 0; j < M; j++){
  for(i = 0; i < N; i++){
-//para calcular a quantidade de costas no mapa, eu dividi a matriz em 9 partes com ifs: 
-//os 4 primeiros ifs são para verificar os "cantos" da matriz, respectivamente: canto superior esquerdo, canto inferior esquerdo, canto superior direito e canto inferior direito, neles invstigo apenas duas "casas" vizinhas
-//depois, crio mais 4 ifs para verificar as quatro bordas da matrizes (excluindo os dois cantos de cada borda): borda supeior, borda inferior, borda esquerda e borda direita, neles investigo as três "casas" vizinhas
-//e, por último, crio um if para verificar as casas dentro da matriz, nele investigo as quatro "casas" vizinhas
+//para calcular a quantidade de costas no mapa, eu dividi a matriz em duas partes com ifs: a primeira verifica os # das bordas, que automaticamente incrementa na quantidade de costas
+//a segunda verifica as # que estão dentro da matriz, onde eu invistigo se algum . nas quatro variáveis vizinhas
+
    if(mapa[j][i] == '#'){
 
-    if(j == 0 && i == 0){
-      if(mapa[j+1][i] == '.' || mapa[j][i+1] == '.' ){
+    if(!(j != 0 && j != M-1 && i != 0 && i != N-1)){
+    
         qtd++;
-      }
-    }
-
-    if(j == M-1 && i == 0){
-      if(mapa[j-1][i] == '.' || mapa[j][i+1] == '.' ){
-        qtd++;
-      }
-    }
-
-    if(j == 0 && i == N-1){
-      if(mapa[j+1][i] == '.' || mapa[j][i-1] == '.' ){
-        qtd++;
-      }
-    }
-
-    if(j == M-1 && i == N-1){
-      if(mapa[j-1][i] == '.' || mapa[j][i-1] == '.' ){
-        qtd++;
-      }
-    }
-
-    if(j == 0 && i != 0 && i != N-1){
-      if(mapa[j+1][i] == '.' || mapa[j][i-1] == '.' || mapa[j][i+1] == '.'){
-        qtd++;
-      }
-    }
-
-    if(j == M-1 && i != 0 && i != N-1){
-      if(mapa[j-1][i] == '.' || mapa[j][i-1] == '.' || mapa[j][i+1] == '.'){
-        qtd++;
-      }
-    }
-
-    if(j != 0 && j != M-1 && i == 0){
-      if(mapa[j-1][i] == '.' || mapa[j+1][i] == '.' || mapa[j][i+1] == '.'){
-        qtd++;
-      }
-    }
-
-   if(j != 0 && j != M-1 && i == N-1){
-      if(mapa[j-1][i] == '.' || mapa[j+1][i] == '.' || mapa[j][i-1] == '.'){
-        qtd++;
-      }
-    }
+    
+   }
 
    if(j != 0 && j != M-1 && i != 0 && i != N-1){
     if(mapa [j+1][i] == '.' || mapa [j][i+1] == '.' || mapa [j][i-1] == '.' || mapa [j-1][i] == '.'){
