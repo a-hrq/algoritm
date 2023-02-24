@@ -1,0 +1,239 @@
+#define MAX_ALUNOS 4
+#define MAX_TURMAS 4
+#include<stdio.h>
+#include<stdlib.h>
+#include<locale.h>
+typedef struct aluno {
+int mat;
+char nome[80];
+float notas[3];
+float media;
+} Aluno;
+
+typedef struct turma {
+char id;
+int vag;
+Aluno* alunos[MAX_ALUNOS];
+} Turma;
+Turma *turmas[MAX_TURMAS];
+
+
+
+void cria_turma(Turma *turma, char id){ //Implemento a função para turmar que recebe o endereço da struct e o id a ser implementado (não consegui fazer da forma solicitada por causa de um erro que não consegui identificar).
+int m;
+
+
+
+for(m = 0; m < MAX_ALUNOS; m++){
+    turma->alunos[m] = NULL;
+ }
+ turma->id = id;
+turma->vag = MAX_ALUNOS; //implemento o número de vagas restantes, ou seja, todos
+}
+
+void matricula_aluno(Turma *turma, int mat, char *nome){
+int m, k;
+ for(m = 0; m < MAX_ALUNOS; m++){ //estrutura para encontrar uma vaga livre para a matrícula, onde o índice é salvo na variável m
+    if(turma->alunos[m] == NULL){
+     break;
+    }
+ }
+ turma->alunos[m] = (Aluno*) malloc(MAX_ALUNOS*sizeof(Turma)); //para a prevenção de erros, aloco dinamicamente mais uma vez uma estrutura alunos.
+ for(k = 0; *(nome + k) != '\0'; k++){ //registro do nome do aluno
+ 	turma->alunos[m]->nome[k] = *(nome + k);
+ }
+ turma->alunos[m]->media = 567000; //atribuo um número "impossível" para média do aluno caso as funções 4 e 5 sejam acionadas e as notas da turma não tenham sido lançadas
+ turma->alunos[m]->mat = mat; //registro a matrícula como fornecido na main
+ turma->vag = turma->vag - 1; //diminuo uma vaga da turma
+}
+
+void lanca_notas(Turma *turma){
+setlocale(LC_ALL, "portuguese");
+int m, k;
+k = 0;
+ for(m = 0; m < MAX_ALUNOS; m++){ //estrutura para percorrer todos os alunos matriculados na turma
+ 	if(turma->alunos[m] != NULL){
+ 		fflush(stdin);// atribuição das notas
+ 		printf("\nDigite as notas de %s (Matrícula: %d): ", turma->alunos[m]->nome, turma->alunos[m]->mat);
+ 		scanf("%f %f %f", &turma->alunos[m]->notas[0], &turma->alunos[m]->notas[1], &turma->alunos[m]->notas[2]);
+ 		turma->alunos[m]->media = (turma->alunos[m]->notas[0] + turma->alunos[m]->notas[1] + turma->alunos[m]->notas[2])/3; //cálculo da média
+ 		k++;
+	 }
+ }
+ if(k == 0){ //Caso não haja alunos matriculados, a função emitirá um aviso
+ 	printf("\nNão há alunos matriculados nesta turma!\n");
+ }
+}
+
+void imprime_turma(Turma *turma){
+setlocale(LC_ALL, "portuguese");
+	int m, k;
+k = 0;
+ for(m = 0; m < MAX_ALUNOS; m++){ //estrutura para percorrer todos os alunos da tturma
+ 	if(turma->alunos[m] != NULL){ //if para que se existe alguém matriculado na vaga
+ 		fflush(stdin);
+ 		printf("\nNome: %s\nMatrícula: %d\n", turma->alunos[m]->nome, turma->alunos[m]->mat);
+ 		fflush(stdin);
+ 		if(turma->alunos[m]->media == 567000){ //if para determinar se as notas foram ou não lançadas
+ 			printf("Notas não lançadas\n\n");
+		 } else {
+		 	printf("Notas: %f %f %f\nMédia: %f\n\n", turma->alunos[m]->notas[0], turma->alunos[m]->notas[1], turma->alunos[m]->notas[2], turma->alunos[m]->media);
+		 }
+ 		k++;
+	 }
+ }
+ if(k == 0){
+ 	printf("\nNão há alunos matriculados nesta turma!\n");
+ }
+}
+
+void imprime_turmas(Turma **turma, int n){
+int i, al;
+ for(i = 0; i < n; i++){
+ 	printf("Turma %c:\nVagas disponíveis - %d\n", turma[i]->id, turma[i]->vag); //Mostro as vagas diponíveis
+ 	printf("Alunos Matriculados:\n");
+ 	for(al = 0; al < MAX_ALUNOS; al++){ //estrutura para percorrer todos os alunos matriculados da turma
+ 		if(turma[i]->alunos[al] != NULL){
+		 printf("Nome - %s\nMatrícula - %d\n", turma[i]->alunos[al]->nome, turma[i]->alunos[al]->mat);
+		 if(turma[i]->alunos[al]->media != 567000){ //if para determinar se as notas foram ou não lançadas
+            printf("Média: %f\n\n", turma[i]->alunos[al]->media);
+		 } else {
+		     printf("Média não lançada!\n\n");
+		 }
+	   }
+	 }
+
+ }
+}
+
+Turma* procura_turma(Turma **turma, int n, char id){
+setlocale(LC_ALL, "portuguese");
+int i;
+int k = MAX_TURMAS + 1; //inicializo verificador com número impossível de ser alcançado por i
+for(i = 0; i < n; i++){ //estrutura para percorrer todos os índices do vetor
+ if(turma[i]->id == id){ //verifica se o id pertence a tal turma, caso sim, salva o índice em i e k e sai da estrutura
+    k = i;
+    break;
+ }
+}
+if(k == i){
+    return turma[k];
+} else {
+    return NULL;
+}
+}
+
+int main(){
+setlocale(LC_ALL, "portuguese");
+char nome[80];
+char *pnome;
+pnome = nome;
+char id;
+int matr;
+int n, i, k;
+n = 0;
+k = MAX_TURMAS;
+int opcao = 1;
+
+for(i = 0; i < MAX_TURMAS; i++){ //inicializo todas as structs de turmas e todas as structs de alunos
+    turmas[i] = NULL;
+    turmas[i] = (Turma*) malloc(MAX_TURMAS*sizeof(Turma));
+     for(k = 0; k < MAX_ALUNOS; k++){
+        turmas[i]->alunos[k] = (Aluno*) malloc(MAX_ALUNOS*sizeof(Aluno));
+     }
+ }
+ printf("BEM-VINDO AO PROGRAMA DE GERENCIAMENTO DA DISCIPLINA DE ALGORITMOS E ESTRUTURAS DE DADOS I\n");
+
+
+
+
+for(i = 8; opcao != 6; i++){
+ fflush(stdin);
+ printf("\nMENU\n1 - CRIAR TURMA\n2 - MATRICULAR ALUNO\n3 - LANÇAR NOTAS DOS ALUNOS DE UMA TURMA\n4 - IMPRIMIR DADOS DE TODOS OS ALUNOS DE UMA TURMA\n5 - IMPRIMIR DADOS DE TODAS AS TURMAS\n6 - SAIR\n\nDigite sua opção:");
+ scanf("%d", &opcao);
+ switch(opcao){
+
+ case 1:
+ if(n < MAX_TURMAS){ //verifica se o total de turmas já atingido
+ fflush(stdin);
+ printf("Digite o identificador da turma: ");
+ scanf("%c", &id);
+ if(procura_turma(turmas, n, id) == NULL){ //impede que turmas sejam criadas com o mesmo identificador
+    cria_turma(turmas[n], id);
+    printf("\nTURMA CRIADA!\n");
+    n++;
+ } else{
+     printf("\nTURMA JÁ EXISTE!\n");
+ }
+ } else{
+     printf("\nO NÚMERO MÁXIMO DE TURMAS FOI ATINGIDO!\n");
+ }
+ break;
+
+ case 2:
+ fflush(stdin);
+ printf("Digite o identificador da turma que voce deseja matricular o aluno: ");
+ scanf("%c", &id);
+
+
+ if(procura_turma(turmas, n, id) != NULL){ //verifica se existe turma com o id fornecido
+ 	if(procura_turma(turmas, n, id)->vag > 0){ //verifica se a vagas diponíveis para a matrícula
+    printf("Digite o número da matrícula do aluno: ");
+    scanf("%d", &matr);
+    fflush(stdin);
+    printf("Digite o nome do aluno: ");
+    scanf("%[^\n]", pnome);
+    matricula_aluno(procura_turma(turmas, n, id), matr, pnome);
+    printf("\nAluno matriculado!\n");
+    } else{
+    	printf("\nNÃO HÁ VAGAS DISPONÍVEIS NA TURMA SELECIONADA\n");
+	}
+ } else{
+     printf("\nA TURMA SELECIONADA NÃO EXISTE\n");
+ }
+ break;
+
+ case 3:
+ fflush(stdin);
+ printf("Digite o identificador da turma: ");
+ scanf("%c", &id);
+
+ if(procura_turma(turmas, n, id) != NULL){ //verifica se a turma com o verificador
+    lanca_notas(procura_turma(turmas, n, id));
+    printf("\nNOTAS LANÇADAS\n");
+ } else {
+  	printf("\nTURMA NÃO EXISTE!\n");
+  }
+
+ break;
+
+ case 4:
+  fflush(stdin);
+ printf("Digite o identificador da turma: ");
+ scanf("%c", &id);
+
+ if(procura_turma(turmas, n, id) != NULL){ //verifica se a turma com o id fornecido existe
+    imprime_turma(procura_turma(turmas, n, id));
+ } else {
+  	printf("\nTURMA NÃO EXISTE!\n");
+  }
+ break;
+ case 5:
+ imprime_turmas(turmas, n);
+ break;
+ case 6:
+ printf("\nObrigado por usar o programa! Até a próxima!\n");
+ break;
+ default:
+ printf("\nOpção inválida!\n");
+ }
+}
+
+for(k = 0; k < MAX_TURMAS; k++){ //liberação de todas as structs alocadas
+    for(i = 0; i < MAX_ALUNOS; i++){
+        free(turmas[k]->alunos[i]);
+    }
+    free(turmas[k]);
+}
+return 0;
+}
