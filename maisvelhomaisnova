@@ -1,3 +1,4 @@
+//Esqueci de inserir a biblipteca locale nesse código, desculpe pelos erros de acentuação
 #include<stdio.h>
 #include<stdlib.h>
 typedef struct pessoa{
@@ -16,19 +17,21 @@ void preencher(Pessoa *x1){
 }
 
 void imprimir(Pessoa *x1){
-    printf("O nome da pessoa: %s\n", x1->nome);
+    printf("\nO nome da pessoa: %s\n", x1->nome);
     printf("A idade da pessoa: %d\n", x1->idade);
     printf("O numero do documento da pessoa: %d\n", x1->documento);
 }
 
 void modifica(Pessoa *x1){
-x1->idade = x1->idade - 5;
-printf("Vc ficou 5 anos mais novo!");
+printf("\nDigite a nova idade de %s:", x1->nome);
+scanf("%d", &x1->idade);
+printf("A nova idade de %s eh: %d\n", x1->nome, x1->idade);
 }
 
 
 
 void maisvelhamaisnova(int qtd, Pessoa *v4){
+//Utilizei a mesma lógica da questão anterior dos funcionários, só que, dessa vez, utilizei apenas as variváveis para guardar os índices do vetor da pessoa mais velha e mais nova(v e n)
 int v, n, i;
 
 for(i = 0; i < qtd; i++){
@@ -52,6 +55,7 @@ int main(){
 int qtd, i;
 printf("Digite o numero de pessoas que voce deseja cadastrar: ");
 scanf("%d", &qtd);
+//Aloco dinamicamente para guardar as estruturas do tipo Pessoa
 Pessoa *v4 = (Pessoa*) malloc(qtd*sizeof(Pessoa));
 
 if(v4 == NULL){
@@ -62,7 +66,7 @@ for(i = 0; i < qtd; i++){
 printf("Digite o nome da %d pessoa:", i+1);
 scanf("%[^\n]", &v4[i].nome);
 fflush(stdin);
-printf("Digite o nuemro do documento da %d pessoa:", i+1);
+printf("Digite o numero do documento da %d pessoa:", i+1);
 scanf("%d", &v4[i].documento);
 printf("Digite a idade da %d pessoa:", i+1);
 scanf("%d", &v4[i].idade);
@@ -70,9 +74,11 @@ fflush(stdin);
 printf("\n\n");
 }
 maisvelhamaisnova(qtd, v4);
+//faço a liberação desse vetor
 free(v4);
 
 printf("\n\nSegunda parte\n\n");
+//segunda parte referente a questão a, b e c; onde eu crio uma variável x1 do tipo pessoa e envio seu endereço para as funcões criadas
 
 Pessoa x1;
 preencher(&x1);
@@ -80,3 +86,4 @@ imprimir(&x1);
 modifica(&x1);
 return 0;
 }
+
