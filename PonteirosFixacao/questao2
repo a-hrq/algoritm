@@ -1,0 +1,13 @@
+#include<stdio.h>
+//questão 2:
+//creio que seja de erro 
+//porque o programa está tetando um valor inteiro em um ponteiro e endereço de memória não é p e sim x
+
+int main(){
+int x, *p;
+x = 100;
+p = &x;
+printf("Valor de p = %x\tValor de *p = %d", p, *p);
+return 0; 
+}
+//execução bem sucedida
