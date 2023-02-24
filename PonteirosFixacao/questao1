@@ -1,0 +1,3 @@
+//questão 1:
+//o ponteiro recebe o endereço de y, depois x recebe o valor que está em y, x recebe 4, uma unidade é incrementa na variável y, uma unidade é retirada de x, o valor do endereço de p (y) é somado com valor guardado em x
+//portanto, x = 3, y = 4, e p guarda o endereço de y, que vale 4
