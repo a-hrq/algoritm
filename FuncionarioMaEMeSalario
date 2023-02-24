@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<locale.h>
 typedef struct Funcionario{
  char nome[50];
  int salario;
@@ -8,33 +9,41 @@ typedef struct Funcionario{
 } Funcionario;
 
 void preencher(Funcionario *p){
-    printf("Digite o nome do funcionario: ");
+setlocale(LC_ALL, "Portuguese");
+    printf("Digite o nome do funcionário: ");
     scanf("%[^\n]", &p->nome);
-    printf("Digite o salario do funcionario: ");
+    printf("Digite o salario do funcionário: ");
     scanf("%d", &p->salario);
-    printf("Digite o identificador do funcionario: ");
+    printf("Digite o identificador do funcionário: ");
     scanf("%d", &p->ident);
     fflush(stdin);
-    printf("Digite o cargo do funcionario: ");
+    printf("Digite o cargo do funcionário: ");
     scanf("%[^\n]", &p->cargo);
 }
 
 void imprimir(Funcionario *p){
-printf("O nome do funcionario eh: %s\n", p -> nome);
-printf("O salario do funcionario eh: %d\n", p -> salario);
-printf("O identificador do funcionario eh: %d\n", p -> ident);
-printf("O cargo do funcionario eh: %s\n", p -> cargo);
+setlocale(LC_ALL, "Portuguese");
+printf("\nO nome do funcionário é: %s\n", p -> nome);
+printf("O salario do funcionário é: %d\n", p -> salario);
+printf("O identificador do funcionário é: %d\n", p -> ident);
+printf("O cargo do funcionário é: %s\n", p -> cargo);
 }
-void reducao(Funcionario *p){
-p->salario = p->salario*0,9;
-printf("Houve uma reducao de 10 porcento no seu salario.\n ");
+void novosalario(Funcionario *p){
+setlocale(LC_ALL, "Portuguese");
+printf("\nDigite o novo salário de %s:", p->nome);
+scanf("%d", &p->salario);
+printf("O novo salário dele(a) é: %d", p->salario);
 }
 
-void maioremenor(Funcionario *v3){
+void maioremenor(Funcionario *v3, int qtd){
+//criei uma estrutura para guardar o maior e menor salário (ma e me) junto com seus respectivos índices (ima e ime)
+//onde, na primeira execução do for, as variáveis são preenchidas com os dados do primeiro funcionários e, nas próximas execuções,
+//os salários do maior e menor são comparados com o os do índice atual
+setlocale(LC_ALL, "Portuguese");
 int ma;
 int me;
 int i, ima, ime;
-for(i = 0; i < 5; i++){
+for(i = 0; i < qtd; i++){
     if(i == 0){
     ma = v3[i].salario;
     me = v3[i].salario;
@@ -52,30 +61,35 @@ for(i = 0; i < 5; i++){
 
     }
 }
-printf("O maior salario eh %d do funcionario %d \n", ma, ima+1);
-printf("O menor salario eh %d do funcionario %d \n\n", me, ime+1);
+printf("O maior salario é %d do funcionario de cargo %s \n", ma, v3[ima].cargo);
+printf("O menor salario é %d do funcionario %s \n\n", me, v3[ime].cargo);
 }
 
 int main(){
-int i;
-Funcionario v3[5];
+int i, qtd;
+//crio uma variável x1 do tipo Funcionario e envio seu endereço a todas as funções
 Funcionario x1;
 preencher(&x1);
 imprimir(&x1);
-reducao(&x1);
+novosalario(&x1);
 printf("\n");
 fflush(stdin);
-printf("Segunda parte\n\n");
+printf("\nSegunda parte\n\n");
+//Na segunda, atendendo a questão d, crio uma
+printf("Digite a quantidade de funcionários que você deseja inserir: ");
+scanf("%d", &qtd);
+Funcionario v3[qtd];
 
-for(i = 0; i < 5; i++){
- printf("Digite o nome do funcionario %d: ", i+1);
+for(i = 0; i < qtd; i++){
+ fflush(stdin);
+ printf("Digite o nome do funcionário %d: ", i+1);
  scanf("%[^\n]", &v3[i].nome);
- printf("Digite o salario do funcionario %d: ", i+1);
+ printf("Digite o salario do funcionário %d: ", i+1);
  scanf("%d", &v3[i].salario);
- printf("Digite o identificador do funcionario %d: ", i+1);
+ printf("Digite o identificador do funcionário %d: ", i+1);
  scanf("%d", &v3[i].ident);
  fflush(stdin);
- printf("Digite o cargo do funcionario %d: ", i+1);
+ printf("Digite o cargo do funcionário %d: ", i+1);
  scanf("%[^\n]", &v3[i].cargo);
  fflush(stdin);
  printf("\n\n");
@@ -83,7 +97,7 @@ for(i = 0; i < 5; i++){
 
 }
 
-maioremenor(v3);
+maioremenor(v3, qtd);
 
 return 0;
 }
