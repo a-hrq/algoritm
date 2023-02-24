@@ -7,13 +7,13 @@ int M, N;
 int j, i, qtd;
 printf("Digite a quantidade de linhas do mapa: ");
 scanf("%d", &M);
-printf("Digite a quantidade de linhas do mapa: ");
+printf("Digite a quantidade de colunas do mapa: ");
 scanf("%d", &N);
 
 if(!(1 <= M <= 999 && 1 <= N <= 999)){
 exit(1);
 }
-
+//aloco um vetor de ponteiros do tipo char de tamanho M (para reresentar as linhas da matriz), depois inicializo cada ponteiro do vetor como um vetor do tipo char de tamanho N (para representar as colunas da matriz)
 char **mapa = (char**) malloc(M*sizeof(char*));
 for(j = 0; j < M; j++){
     mapa[j] = (char*) malloc(N*sizeof(char));
@@ -26,7 +26,10 @@ scanf("%s[^\n]", mapa[j]);
 qtd = 0;
 for(j = 0; j < M; j++){
  for(i = 0; i < N; i++){
-
+//para calcular a quantidade de costas no mapa, eu dividi a matriz em 9 partes com ifs: 
+//os 4 primeiros ifs são para verificar os "cantos" da matriz, respectivamente: canto superior esquerdo, canto inferior esquerdo, canto superior direito e canto inferior direito, neles invstigo apenas duas "casas" vizinhas
+//depois, crio mais 4 ifs para verificar as quatro bordas da matrizes (excluindo os dois cantos de cada borda): borda supeior, borda inferior, borda esquerda e borda direita, neles investigo as três "casas" vizinhas
+//e, por último, crio um if para verificar as casas dentro da matriz, nele investigo as quatro "casas" vizinhas
    if(mapa[j][i] == '#'){
 
     if(j == 0 && i == 0){
@@ -88,7 +91,7 @@ for(j = 0; j < M; j++){
  }
 }
 printf("\n %d", qtd);
-
+//faço lireção de cada linha da matriz
 for(qtd = 0; qtd < M; qtd++){
   free(mapa[qtd]);
 }
