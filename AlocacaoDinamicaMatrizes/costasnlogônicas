@@ -15,8 +15,14 @@ exit(1);
 }
 //aloco um vetor de ponteiros do tipo char de tamanho M (para reresentar as linhas da matriz), depois inicializo cada ponteiro do vetor como um vetor do tipo char de tamanho N (para representar as colunas da matriz)
 char **mapa = (char**) malloc(M*sizeof(char*));
+if(mapa == NULL){
+    exit(1);
+}
 for(j = 0; j < M; j++){
     mapa[j] = (char*) malloc(N*sizeof(char));
+    if(mapa[j] == NULL){
+        exit(1);
+    }
 }
 printf("\n\n");
 fflush(stdin);
@@ -27,14 +33,14 @@ qtd = 0;
 for(j = 0; j < M; j++){
  for(i = 0; i < N; i++){
 //para calcular a quantidade de costas no mapa, eu dividi a matriz em duas partes com ifs: a primeira verifica os # das bordas, que automaticamente incrementa na quantidade de costas
-//a segunda verifica as # que estão dentro da matriz, onde eu invistigo se algum . nas quatro variáveis vizinhas
+//a segunda verifica as # que estão dentro da matriz, onde eu invistigo se existe algum . nas quatro variáveis vizinhas
 
    if(mapa[j][i] == '#'){
 
     if(!(j != 0 && j != M-1 && i != 0 && i != N-1)){
-    
+
         qtd++;
-    
+
    }
 
    if(j != 0 && j != M-1 && i != 0 && i != N-1){
