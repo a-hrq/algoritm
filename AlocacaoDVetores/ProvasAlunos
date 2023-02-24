@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<locale.h>
+int main(){
+setlocale(LC_ALL, "Portuguese");
+int n, k, aprov, i;
+printf("Digite a quantidade de questões: ");
+scanf("%d", &n);
+char* v = (char*) malloc(n*sizeof(char)); //vetor para guardar o gabarito
+char* r = (char*) malloc(sizeof(char)); //variável para guardar as respostas dos alunos
+float* notas = (float*) malloc(10*sizeof(float)); //vetor para guardar as notas dos alunos
+for(i = 0; i < n; i++){
+    fflush(stdin);
+    printf("Digite a resposta da questão %d:", i+1);
+    scanf("%c", &v[i]); //leitura do gabarito da prova
+}
+for(i = 0; i < 10; i++){
+notas[i] = 0; // inicializo as notas com zero
+}
+for(i = 0; i < 10; i++){
+    for(k = 0; k < n; k++){
+        fflush(stdin);
+        printf("Digite a resposta do aluno %d para a questão %d:", i+1, k+1);
+        scanf("%c", r);
+        if(v[k] == *r){ //comparo a respota do aluno com a do gabarito
+            notas[i] = 10/(float)n + notas[i]; //incremento o valor da questão na nota do aluno
+        }
+    }
+    printf("\n");
+}
+aprov = 0;
+for(i = 0; i < 10; i++){
+printf("A nota obtida pelo aluno %d foi: %f\n\n", i+1, notas[i]);//imprimo a nota de cada aluno
+if(notas[i] >= 6){
+    aprov++;//se a nota for maior que seis, incremento um no número de aprovados
+}
+}
+printf("A porcentagem de aporvados é: %f\n", (float) aprov*10);//imprimo o número de aprovados
+free(v);
+free(notas);
+free(r);
+return 0;
+}
